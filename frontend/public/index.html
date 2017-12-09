@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Create User</title>
+</head>
+<body>
+  <form id="form" action="http://localhost:3001/api/user/save" method="post">
+    <input type="text" name='fullname' placeholder="Guillermo Lopez">
+    <input type="email" name='email' placeholder="g@gmail.com">
+    <input type="text" name='username' placeholder="glopez">
+    <input type="password" name='password' placeholder="****">
+    <button>create</button>
+  </form>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="http://localhost:3002/socket.io/socket.io.js"></script>
+  <script>
+    const url = 'http://localhost:3000'
+
+    const form = document.getElementById('form')
+    form.addEventListener('submit', function(event) {
+      event.preventDefault()
+      const data = new FormData(event.target)
+
+      const options = {
+        method: 'POST',
+        url: `${url}/api/user/save`,
+        data: {
+          fullname: data.get('fullname'),
+          email: data.get('email'),
+          username: data.get('username'),
+          password: data.get('password')
+        }
+      }
+
+      axios(options).then(result => {
+        console.log(result)
+      }).catch(err => {
+        console.log(err)
+      })
+
+    })
+  </script>
+</body>
+</html>
